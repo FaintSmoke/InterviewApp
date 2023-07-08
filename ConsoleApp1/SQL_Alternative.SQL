@@ -20,7 +20,7 @@
 */
 
 -- ==========================================================
--- Create initial MasterData Schema
+-- Create initial Schemas
 -- ==========================================================
 CREATE SCHEMA MasterData 
 GO
@@ -28,13 +28,6 @@ CREATE SCHEMA MasterAPI
 GO
 CREATE SCHEMA FunctionAPI 
 GO
-
---EXEC sys.sp_addextendedproperty 
---	@name=N'Column_Description', @value=N'Enum key uniquely representing precision adjustment method; matches Mes.MesMath.PrecisionAdjustMethod in Mes.Core' , 
---	@level0type=N'SCHEMA',@level0name=N'MasterData', 
---	@level1type=N'TABLE',@level1name=N'PrecisionAdjustMethod', 
---	@level2type=N'COLUMN',@level2name=N'PrecisionAdjustMethodID'
---GO
 
 -- ==========================================================
 -- Create the table for each attribute
@@ -123,6 +116,16 @@ GO
 	SELECT AttributeSpecId, AttributeId, Rate, Dttm_Change
 	FROM MasterData.AttributeSpec
 	GO
+
+-- ==========================================================
+-- Add object descriptions
+-- ==========================================================
+--EXEC sys.sp_addextendedproperty 
+--	@name=N'MS_Description',	@value=       N'Unique ID for the table' , 
+--	@level0type=N'SCHEMA',		@level0name=  N'MasterData', 
+--	@level1type=N'TABLE',		@level1name=  N'Attributes', 
+--	@level2type=N'COLUMN',		@level2name=  N'AttributeId'
+--GO
 
 -- ==========================================================
 -- The Function
@@ -251,8 +254,4 @@ SELECT
 	FROM 
 		MasterAPI.Attributes A 
 		LEFT JOIN MasterAPI.AttributeSpec B ON B.AttributeId = A.AttributeId
-
-
-
-
 
